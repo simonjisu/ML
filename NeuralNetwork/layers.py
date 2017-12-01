@@ -77,3 +77,7 @@ class SoftmaxWithLoss(object):
         dx = (self.y - self.t) / batch_size
 
         return dx
+
+
+
+

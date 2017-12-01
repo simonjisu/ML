@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import numpy as np
 import collections
 import sys
 sys.path.insert(0, '../GD/')
@@ -13,7 +12,6 @@ class TwoLayer(object):
         self.params['b1'] = weight_init_std * np.random.randn(hidden_size)
         self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
         self.params['b2'] = weight_init_std * np.random.randn(output_size)
-        self.grads = collections.defaultdict(np.float)
 
         # 계층 생성
         self.layers = collections.OrderedDict()
@@ -46,8 +44,10 @@ class TwoLayer(object):
         loss_function = lambda W: self.loss(x, t)
 
         grads = {}
-        for key in self.params.keys():
-            grads[key] = numerical_gradient(loss_function, self.params[key])
+        grads['W1'] = numerical_gradient(loss_function, self.params['W1'])
+        grads['b1'] = numerical_gradient(loss_function, self.params['b1'])
+        grads['W2'] = numerical_gradient(loss_function, self.params['W2'])
+        grads['b2'] = numerical_gradient(loss_function, self.params['b2'])
 
         return grads
 
