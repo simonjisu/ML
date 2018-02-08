@@ -6,7 +6,7 @@ Numpy 만으로 머신러닝 공부하기 프로젝트
     * In /DecisionTreeModel
 * Perceptron
     * In /Perceptron
-* Single, Two Layer Neural Network
+* Single, Two Layer Neural Network, MLP, RNN
     * In /NeuralNetwork
 * Gradient Descent Algorithms:
     * In /GD
