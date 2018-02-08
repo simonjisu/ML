@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from common.utils_nn import softmax, cross_entropy_error
+from common.utils_nn import softmax, cross_entropy_error, tanh
 
 
 class ReLu(object):
@@ -56,6 +56,52 @@ class Affine(object):
         dx = np.dot(dout, self.W.T)
         self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(self.b, axis=0)
+
+        return dx
+
+
+class Linear(object):
+    def __init__(self, W, b=None, bias=True):
+        self.bias = bias
+        self.W = W
+        self.b = b
+        self.x = None
+        self.dW = None
+        self.db = None
+
+    def forward(self, x):
+        self.x = x
+        if self.bias:
+            out = np.dot(self.x, self.W) + self.b
+        else:
+            out = np.dot(self.x, self.W)
+
+        return out
+
+    def backward(self, dout):
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
+        if self.bias:
+            self.db = np.sum(self.b, axis=0)
+        else:
+            self.db = None
+
+        return dx
+
+
+
+class Tanh(object):
+    def __init__(self):
+        self.out = None
+
+    def forward(self, x):
+        out = np.tanh(x)
+        self.out = out
+
+        return out
+
+    def backward(self, dout):
+        dx = dout * (1 - self.out**2)
 
         return dx
 

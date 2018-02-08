@@ -14,6 +14,18 @@ def softmax(x):
     return np.exp(x) / np.sum(np.exp(x))
 
 
+def tanh(x):
+    if x.ndim == 2:  # batch 가 있을때
+        x = x.T
+        x = x - np.max(x, axis=0)
+        y = np.exp(x) / np.sum(np.exp(x), axis=0)
+        return y.T
+
+    x = x - np.max(x)
+
+    return (1 - np.exp(-x)) / (1 + np.exp(-x))
+
+
 def relu(x):
     return np.maximum(0, x)
 
